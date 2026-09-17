@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة القوالب - التحميل المجاني</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; padding: 0; }
+        .dev-badge { background: #0f172a; color: #f8fafc; text-align: center; padding: 8px; font-size: 13px; font-weight: bold; }
+        .main-header { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 15px 0; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; color: #2563eb; margin: 0; }
+        .nav-links a { margin-right: 20px; text-decoration: none; color: #475569; font-weight: 500; }
+        .btn-primary { background: #10b981; color: white; border: none; padding: 12px 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn-primary:hover { background: #059669; }
+    </style>
+</head>
+<body>
+
+    <div class="dev-badge">📑 إدارة وتطوير أبو الحازم العمري</div>
+
+    <header class="main-header">
+        <div class="container nav-container">
+            <h1 class="logo">منصة القوالب</h1>
+            <nav class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="browse.html">استعراض القوالب</a>
+                <a href="auth.html">حسابي / تسجيل الدخول</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="padding: 40px 0;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+            
+            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h2>قالب الشركات والخدمات الاحترافي</h2>
+                <p style="color: #64748b; margin: 10px 0;">التقنيات: HTML, CSS, JavaScript</p>
+                <div style="background: #e2e8f0; height: 250px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; margin: 20px 0; font-weight: bold;">
+                    معاينة القالب البرمجي
+                </div>
+                <p style="line-height: 1.8;">هذا القالب مصمم بعناية فائقة، خفيف الوزن، وسهل التعديل بالكامل من خلال المفكرة.</p>
+            </div>
+
+            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: fit-content; text-align: center;">
+                <span style="background: #10b981; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 15px;">مجاني بالكامل 🎉</span>
+                <h3 style="margin-bottom: 10px;">تحميل القالب</h3>
+                <div style="font-size: 28px; font-weight: bold; color: #10b981; margin: 15px 0;">0$</div>
+                
+                <button class="btn-primary" onclick="requestFreeTemplate()">
+                    تحميل القالب الآن 🎁
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, auth } from './firebase-config.js';
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+        window.requestFreeTemplate = async function() {
+            const user = auth.currentUser;
+            
+            if (!user) {
+                alert("يرجى تسجيل الدخول أولاً لتتمكن من التحميل!");
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "orders"), {
+                    userEmail: user.email,
+                    licenseType: "مجاني بالكامل",
+                    price: 0,
+                    status: "تم التحميل",
+                    timestamp: new Date()
+                });
+                alert("تم تسجيل طلبك بنجاح! سيتم تحويلك لتحميل الملف.");
+            } catch (error) {
+                alert("حدث خطأ: " + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
