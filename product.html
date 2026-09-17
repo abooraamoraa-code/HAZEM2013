@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة القوالب - شراء القالب عبر مالتشات</title>
+    <title>منصة القوالب - شراء القالب</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- 
+      =================================================================
+      منطقة إعداد رابط الدفع:
+      عندما تجهز حساب باي بال (برقم هاتف الوالد)، قم باستبدال الرابط 
+      في المتغير (PAYPAL_LINK) أدناه برابطك الشخصي (مثال: paypal.me/YourName)
+      =================================================================
+    -->
+    <script>
+        const PAYPAL_LINK = "https://paypal.me/YourPayPalName"; // <-- ضع رابط باي بال الخاص بك هنا بين علامتي التنصيص
+    </script>
 
     <!-- العلامة المائية الرسمية في الزاوية -->
     <div class="dev-badge">📑 إدارة وتطوير أبو العز العمري</div>
@@ -39,7 +50,7 @@
                 </p>
             </div>
 
-            <!-- صندوق الشراء واختيار التراخيص والدفع عبر مالتشات -->
+            <!-- صندوق الشراء واختيار التراخيص -->
             <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: fit-content;">
                 <h3 style="margin-bottom: 15px;">اختر نوع الترخيص:</h3>
                 
@@ -58,20 +69,20 @@
                     السعر: $15
                 </div>
 
-                <!-- زر الدفع وربط الطلب بسحابة Firebase -->
-                <button class="btn-primary full-width" onclick="payViaMalchat()">
-                    الدفع عبر محفظة مالتشات 💳
+                <!-- زر الدفع وربط الطلب بسحابة Firebase وباي بال -->
+                <button class="btn-primary full-width" onclick="payViaPayPal()">
+                    الدفع الآمن عبر PayPal 💳
                 </button>
                 
                 <p style="font-size: 12px; color: #94a3b8; text-align: center; margin-top: 15px;">
-                    سيتم تسجيل طلبك وتحويلك لرابط محفظة مالتشات لإتمام الدفع الفوري.
+                    سيتم تسجيل طلبك تلقائياً وتحويلك لصفحة الدفع لإتمام المعاملة بأمان.
                 </p>
             </div>
 
         </div>
     </div>
 
-    <!-- سكريبت الربط بقاعدة البيانات وتحويل الدفع -->
+    <!-- سكريبت الربط بقاعدة البيانات وتحويل الدفع التلقائي -->
     <script type="module">
         import { db, auth } from './firebase-config.js';
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
@@ -85,10 +96,10 @@
             document.getElementById('priceDisplay').innerText = "السعر: $" + price;
         }
 
-        window.payViaMalchat = async function() {
+        window.payViaPayPal = async function() {
             const user = auth.currentUser;
             
-            // التحقق من تسجيل الدخول
+            // التأكد من أن المستخدم مسجل دخول
             if (!user) {
                 alert("يرجى تسجيل الدخول أولاً من صفحة حسابي لتتمكن من إتمام عملية الشراء!");
                 window.location.href = 'auth.html';
@@ -105,11 +116,11 @@
                     timestamp: new Date()
                 });
 
-                // رابط محفظة مالتشات الخاص بك (استبدل YOUR_WALLET_ID برابطك الفعلي)
-                const malchatLink = "https://malchat.app/wallet/YOUR_WALLET_ID";
+                // دمج رابط باي بال مع المبلغ المختار تلقائياً
+                const finalPaymentUrl = PAYPAL_LINK + "/" + currentPrice;
 
-                alert("تم تسجيل طلبك بنجاح في النظام! سيتم تحويلك الآن إلى محفظة مالتشات لدفع مبلغ ($" + currentPrice + ").");
-                window.open(malchatLink, '_blank');
+                alert("تم تسجيل طلبك في النظام بنجاح! سيتم تحويلك الآن إلى صفحة الدفع عبر PayPal لدفع مبلغ ($" + currentPrice + ").");
+                window.open(finalPaymentUrl, '_blank');
 
             } catch (error) {
                 alert("حدث خطأ أثناء تسجيل الطلب: " + error.message);
