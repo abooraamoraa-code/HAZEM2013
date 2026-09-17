@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة القوالب - تفاصيل القالب ونظام التراخيص</title>
+    <title>منصة القوالب - شراء القالب عبر مالتشات</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,48 +18,39 @@
             <nav class="nav-links">
                 <a href="index.html">الرئيسية</a>
                 <a href="browse.html">استعراض القوالب</a>
-                <a href="pricing.html">أسعار الاشتراكات</a>
-                <a href="developers.html">صفحة المطورين</a>
-                <a href="dashboard.html">لوحة التحكم</a>
-                <a href="help.html">الدعم الفني</a>
+                <a href="auth.html">حسابي / تسجيل الدخول</a>
             </nav>
         </div>
     </header>
 
-    <!-- محتوى صفحة تفاصيل القالب ونظام التراخيص -->
-    <div class="container product-details-page" style="padding: 40px 0;">
+    <!-- محتوى صفحة المنتج والشراء -->
+    <div class="container" style="padding: 40px 0;">
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
             
-            <!-- تفاصيل القالب ومعرض الصور -->
-            <div class="product-info-box">
-                <div style="background: #e2e8f0; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #64748b; margin-bottom: 20px;">
-                    معرض الصور / معاينة القالب البرمجي
+            <!-- تفاصيل القالب -->
+            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h2>قالب الشركات والخدمات الاحترافي</h2>
+                <p style="color: #64748b; margin: 10px 0;">التقنيات: HTML, CSS, Vanilla JS (جاهز للتعديل المباشر عبر المفكرة)</p>
+                <div style="background: #e2e8f0; height: 250px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; margin: 20px 0; font-weight: bold;">
+                    معاينة القالب البرمجي
                 </div>
-                <h2>قالب الشركات والخدمات الاحترافي (Corporate Template)</h2>
-                <p style="color: #64748b; margin: 10px 0;">التقنيات: HTML5, CSS3, Vanilla JavaScript (جاهز للمفكرة)</p>
-                <p style="margin-top: 15px; line-height: 1.8;">
-                    هذا القالب مصمم بعناية فائقة لتلبية احتياجات الشركات والوكالات التقنية. يأتي مع أكواد نظيفة بالكامل، سهلة التعديل، ومتوافقة مع جميع الهواتف والأجهزة الذكية.
+                <p style="line-height: 1.8;">
+                    هذا القالب مصمم بعناية فائقة، خفيف الوزن، وسهل التعديل بالكامل من خلال المفكرة دون أي تعقيد. يمنحك مظهراً احترافياً لعملك أو شركتك.
                 </p>
-                
-                <h3 style="margin-top: 25px; margin-bottom: 10px;">شروط الترخيص:</h3>
-                <ul style="list-style-type: disc; margin-right: 20px; color: #475569;">
-                    <li>يمنحك الترخيص الحق في التعديل الكامل عبر المفكرة.</li>
-                    <li>يحظر إعادة بيع القالب أو توزيعه مجاناً بدون إذن رسمي.</li>
-                </ul>
             </div>
 
-            <!-- صندوق الشراء واختيار التراخيص (مرتبط بـ مالتشات) -->
-            <div class="purchase-box" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: fit-content;">
+            <!-- صندوق الشراء واختيار التراخيص والدفع عبر مالتشات -->
+            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: fit-content;">
                 <h3 style="margin-bottom: 15px;">اختر نوع الترخيص:</h3>
                 
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px;">
-                        <input type="radio" name="licenseType" value="personal" checked onchange="updatePrice('personal')"> 
-                        ترخيص شخصي ($15) - موقع واحد
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px;">
+                        <input type="radio" name="licenseType" value="personal" checked onchange="updatePrice(15, 'personal')"> 
+                        ترخيص شخصي ($15)
                     </label>
                     <label style="display: block; font-weight: bold; font-size: 14px;">
-                        <input type="radio" name="licenseType" value="commercial" onchange="updatePrice('commercial')"> 
-                        ترخيص تجاري ($39) - عدة مواقع
+                        <input type="radio" name="licenseType" value="commercial" onchange="updatePrice(39, 'commercial')"> 
+                        ترخيص تجاري ($39)
                     </label>
                 </div>
 
@@ -67,41 +58,40 @@
                     السعر: $15
                 </div>
 
-                <!-- زر الشراء عبر محفظة مالتشات -->
-                <button class="btn-primary full-width" onclick="buyViaMalchat()">
-                    شراء عبر محفظة مالتشات 💳
+                <!-- زر الدفع الحقيقي عبر مالتشات -->
+                <button class="btn-primary full-width" onclick="payViaMalchat()">
+                    الدفع عبر محفظة مالتشات 💳
                 </button>
                 
                 <p style="font-size: 12px; color: #94a3b8; text-align: center; margin-top: 15px;">
-                    سيتم تحويلك مباشرة لإتمام الدفع وتأكيد الترخيص عبر مالتشات.
+                    سيتم تحويلك لرابط محفظة مالتشات لإتمام الدفع، وبعدها سيتم تفعيل القالب في حسابك.
                 </p>
             </div>
 
         </div>
     </div>
 
-    <!-- التذييل -->
-    <footer class="main-footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 جميع الحقوق محفوظة - إدارة وتطوير أبو العز العمري</p>
-        </div>
-    </footer>
-
-    <!-- سكريبت تفاعلي لتغيير السعر وتوجيه محفظة مالتشات -->
+    <!-- سكريبت إدارة السعر والرابط الحقيقي لمالتشات -->
     <script>
-        function updatePrice(type) {
-            const priceDisplay = document.getElementById('priceDisplay');
-            if(type === 'personal') {
-                priceDisplay.innerText = "السعر: $15";
-            } else {
-                priceDisplay.innerText = "السعر: $39";
-            }
+        let currentPrice = 15;
+        let currentLicense = 'personal';
+
+        function updatePrice(price, type) {
+            currentPrice = price;
+            currentLicense = type;
+            document.getElementById('priceDisplay').innerText = "السعر: $" + price;
         }
 
-        function buyViaMalchat() {
-            const selectedLicense = document.querySelector('input[name="licenseType"]:checked').value;
-            alert("جاري تحويلك إلى محفظة مالتشات لإتمام شراء " + (selectedLicense === 'personal' ? 'الترخيص الشخصي' : 'الترخيص التجاري') + " وإرسال ملف القالب مع رخصتك الرسمية!");
-            // هنا يمكنك لاحقاً وضع رابط محفظة مالتشات الخاص بك أو رابط الدفع المباشر
+        function payViaMalchat() {
+            // 🔗 رابط محفظة مالتشات الحقيقي الخاص بك (قم بوضع رابط محفظتك أو رابط الدفع المباشر هنا)
+            // مثال: const malchatLink = "https://malchat.app/pay/YOUR_WALLET_ID?amount=" + currentPrice;
+            const malchatLink = "https://malchat.app/wallet/YOUR_WALLET_ID"; // استبدل YOUR_WALLET_ID برابط محفظتك الفعلي
+
+            // تنبيه المستخدم وتحويله لرابط الدفع الحقيقي
+            alert("سيتم تحويلك الآن إلى محفظة مالتشات لدفع مبلغ ($" + currentPrice + ") مقابل " + (currentLicense === 'personal' ? 'الترخيص الشخصي' : 'الترخيص التجاري') + ".");
+            
+            // فتح رابط مالتشات في تبويب جديد
+            window.open(malchatLink, '_blank');
         }
     </script>
 
