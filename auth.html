@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - منصة القوالب</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- العلامة المائية الرسمية في الزاوية -->
+    <div class="dev-badge">📑 إدارة وتطوير أبو العز العمري</div>
+
+    <!-- شريط التنقل العلوي -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <h1 class="logo">منصة القوالب</h1>
+            <nav class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="browse.html">استعراض القوالب</a>
+                <a href="product.html">تفاصيل القالب</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- صندوق تسجيل الدخول / إنشاء الحساب -->
+    <div class="container" style="max-width: 400px; margin: 60px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #2563eb;">حساب المستخدم</h2>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold;">البريد الإلكتروني:</label>
+            <input type="email" id="userEmail" placeholder="name@example.com" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:4px;">
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold;">كلمة المرور:</label>
+            <input type="password" id="userPassword" placeholder="********" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:4px;">
+        </div>
+
+        <button class="btn-primary full-width" onclick="handleSignUp()">إنشاء حساب جديد</button>
+        <button class="btn-secondary full-width" onclick="handleSignIn()" style="margin-top: 10px; background: #475569; color: white;">تسجيل الدخول</button>
+        
+        <p id="authMessage" style="text-align: center; margin-top: 15px; font-size: 13px; font-weight: bold;"></p>
+    </div>
+
+    <!-- ربط السكريبت بـ Firebase وتفعيل الوظائف -->
+    <script type="module">
+        import { auth } from './firebase-config.js';
+        import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+        // دالة إنشاء حساب جديد حقيقي عبر فايربيس
+        window.handleSignUp = async function() {
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            const msg = document.getElementById('authMessage');
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                msg.style.color = '#166534';
+                msg.innerText = "تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.";
+            } catch (error) {
+                msg.style.color = '#ef4444';
+                msg.innerText = "خطأ: " + error.message;
+            }
+        }
+
+        // دالة تسجيل الدخول الحقيقية عبر فايربيس
+        window.handleSignIn = async function() {
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            const msg = document.getElementById('authMessage');
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                msg.style.color = '#166534';
+                msg.innerText = "تم تسجيل الدخول بنجاح! جاري التوجيه...";
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // الانتقال للصفحة الرئيسية بعد الدخول
+                }, 1500);
+            } catch (error) {
+                msg.style.color = '#ef4444';
+                msg.innerText = "فشل الدخول: تأكد من البريد وكلمة المرور.";
+            }
+        }
+    </script>
+
+</body>
+</html>
