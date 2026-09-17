@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة القوالب - صفحة المطورين</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dev-badge">📑 إدارة وتطوير أبو حازم العمري</div>
+
+    <header class="main-header">
+        <div class="container nav-container">
+            <h1 class="logo">منصة القوالب</h1>
+            <nav class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="browse.html">استعراض القوالب</a>
+                <a href="pricing.html">أسعار الاشتراكات</a>
+                <a href="developers.html" class="active">صفحة المطورين</a>
+                <a href="dashboard.html">لوحة التحكم</a>
+                <a href="help.html">الدعم الفني</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container developers-page">
+        <div class="section-title">
+            <h2>🛠️ زاوية المطورين وأكواد القوالب الجاهزة (HTML, CSS, JS)</h2>
+            <p>مرحباً بك في مرجع المطورين الأساسي. هنا تجد الأكواد الخام والخالصة التي يمكنك نسخها ولصقها مباشرة في المفكرة (Notepad) لتعديل وتشغيل القوالب الثلاثة:</p>
+        </div>
+
+        <!-- صندوق الكود الأول: القالب الأول (شركة ناشئة) -->
+        <div class="code-container-box">
+            <h3>📦 1. كود القالب الأول: شركة ناشئة (HTML الأساسي)</h3>
+            <pre class="code-box"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ar" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;قالب الشركة الناشئة&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Tahoma, sans-serif; background: #f9f9f9; padding: 20px; text-align: center; }
+        .hero { background: #2563eb; color: white; padding: 40px; border-radius: 8px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="hero"&gt;
+        &lt;h1&gt;نصنع الحلول الرقمية لنمو أعمالك&lt;/h1&gt;
+        &lt;button onclick="alert('تم تفعيل القالب بنجاح!')"&gt;ابدأ الآن&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;script&gt;
+        console.log("تم تحميل قالب الشركة الناشئة بنجاح عبر JavaScript الصرفة");
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <!-- صندوق الكود الثاني: القالب الثاني (البورتفوليو الشخصي) -->
+        <div class="code-container-box">
+            <h3>🎨 2. كود القالب الثاني: بورتفوليو شخصي وسيرة ذاتية (JS & CSS تفاعلي)</h3>
+            <pre class="code-box"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ar" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;بورتفوليو شخصي&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial; margin: 0; background: #1e293b; color: #fff; padding: 30px; }
+        .profile-card { background: #334155; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; text-align: center; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="profile-card"&gt;
+        &lt;h2&gt;مرحباً، أنا المطور&lt;/h2&gt;
+        &lt;p&gt;متخصص في تطوير واجهات الويب وتصميم القوالب البرمجية.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <!-- صندوق الكود الثالث: القالب الثالث (المتجر المصغر) -->
+        <div class="code-container-box">
+            <h3>🛒 3. كود القالب الثالث: متجر إلكتروني مصغر (إدارة سلة التسوق بـ JS)</h3>
+            <pre class="code-box"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ar" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;متجر إلكتروني مصغر&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;سلة المشتريات البرمجية&lt;/h2&gt;
+    &lt;button onclick="addToCart()"&gt;أضف المنتج للسلة&lt;/button&gt;
+    &lt;p id="cartStatus"&gt;السلة فارغة حالياً.&lt;/p&gt;
+    &lt;script&gt;
+        function addToCart() {
+            document.getElementById('cartStatus').innerText = "تمت إضافة المنتج بنجاح إلى السلة!";
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 جميع الحقوق محفوظة - إدارة وتطوير أبو حازم العمري</p>
+        </div>
+    </footer>
+
+</body>
+</html>
