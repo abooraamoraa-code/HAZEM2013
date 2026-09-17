@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة القوالب - استعراض القوالب</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dev-badge">📑 إدارة وتطوير أبو حازم العمري</div>
+
+    <header class="main-header">
+        <div class="container nav-container">
+            <h1 class="logo">منصة القوالب</h1>
+            <nav class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="browse.html" class="active">استعراض القوالب</a>
+                <a href="pricing.html">أسعار الاشتراكات</a>
+                <a href="developers.html">صفحة المطورين</a>
+                <a href="dashboard.html">لوحة التحكم</a>
+                <a href="help.html">الدعم الفني</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container browse-page">
+        <!-- شريط البحث الفلترة الجانبية -->
+        <aside class="sidebar-filters">
+            <h3>فلاتر البحث</h3>
+            <div class="filter-group">
+                <label>التصنيف:</label>
+                <select id="categoryFilter">
+                    <option value="all">الكل</option>
+                    <option value="corporate">شركات وخدمات</option>
+                    <option value="portfolio">سيرة ذاتية وبورتفوليو</option>
+                    <option value="ecommerce">متاجر إلكترونية</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>السعر:</label>
+                <select id="priceFilter">
+                    <option value="all">الكل</option>
+                    <option value="free">مجاني</option>
+                    <option value="paid">مدفوع</option>
+                </select>
+            </div>
+        </aside>
+
+        <!-- شبكة عرض القوالب -->
+        <main class="templates-content">
+            <div class="search-bar-container">
+                <input type="text" id="searchInput" placeholder="ابحث عن قالب معين... (إكمال تلقائي)">
+            </div>
+            
+            <div class="templates-grid">
+                <!-- بطاقة قالب 1 -->
+                <div class="template-card" data-category="corporate">
+                    <div class="card-img-placeholder">📦 قالب شركة ناشئة</div>
+                    <div class="card-body">
+                        <h4>قالب الشركات والخدمات الاحترافي</h4>
+                        <p class="rating">⭐⭐⭐⭐⭐ (4.9)</p>
+                        <span class="badge-price free">مجاني</span>
+                        <div class="card-actions">
+                            <a href="product.html" class="btn-sm">تفاصيل القالب</a>
+                            <a href="#" class="btn-sm outline">معاينة حية</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة قالب 2 -->
+                <div class="template-card" data-category="portfolio">
+                    <div class="card-img-placeholder">🎨 قالب البورتفوليو الشخصي</div>
+                    <div class="card-body">
+                        <h4>قالب السيرة الذاتية والمطورين</h4>
+                        <p class="rating">⭐⭐⭐⭐⭐ (5.0)</p>
+                        <span class="badge-price paid">$29</span>
+                        <div class="card-actions">
+                            <a href="product.html" class="btn-sm">تفاصيل القالب</a>
+                            <a href="#" class="btn-sm outline">معاينة حية</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة قالب 3 -->
+                <div class="template-card" data-category="ecommerce">
+                    <div class="card-img-placeholder">🛒 قالب متجر إلكتروني</div>
+                    <div class="card-body">
+                        <h4>قالب المتجر المصغر المتكامل</h4>
+                        <p class="rating">⭐⭐⭐⭐ (4.7)</p>
+                        <span class="badge-price paid">$49</span>
+                        <div class="card-actions">
+                            <a href="product.html" class="btn-sm">تفاصيل القالب</a>
+                            <a href="#" class="btn-sm outline">معاينة حية</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 جميع الحقوق محفوظة - إدارة وتطوير أبو حازم العمري</p>
+        </div>
+    </footer>
+
+</body>
+</html>
