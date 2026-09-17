@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم الجديدة - منصة القوالب</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* تصميم الديكور الجديد كلياً للتأكد من التحديث الفوري */
+        body {
+            background-color: #030712 !important;
+            color: #f3f4f6 !important;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #adminLockScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
+        }
+        .admin-card {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 16px;
+            width: 350px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        #adminPanelContent { display: none; padding: 40px; }
+        .new-badge-ui {
+            background: #3b82f6;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- العلامة المائية الرسمية في الزاوية -->
+    <div class="dev-badge">📑 إدارة وتطوير أبو العز العمري</div>
+
+    <!-- شاشة قفل لوحة الإدارة بتصميم الديكور الجديد -->
+    <div id="adminLockScreen">
+        <div class="admin-card">
+            <span class="new-badge-ui">التصميم الجديد المحدث</span>
+            <h2 style="margin-bottom: 10px; color: #ffffff;">بوابة المشرف</h2>
+            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 25px;">أدخل كلمة المرور لتفعيل اللوحة</p>
+            
+            <input type="password" id="adminPasswordInput" placeholder="كلمة المرور (admin)" style="width:100%; padding:12px; margin-bottom:15px; background:#0f172a; color:white; border:1px solid #334155; border-radius:8px; text-align: center; font-size: 16px; outline: none;">
+            
+            <button class="btn-primary full-width" onclick="checkAdminPassword()" style="padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">فتح لوحة التحكم 🚀</button>
+            <p id="errorMsg" style="color: #f87171; font-size: 13px; margin-top: 15px; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <!-- محتوى لوحة الإدارة بعد الدخول -->
+    <div id="adminPanelContent">
+        <header style="border-bottom: 1px solid #1e293b; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+            <h1 style="color: #60a5fa; margin: 0; font-size: 24px;">✨ لوحة تحكم المشرف (تم التحديث بنجاح)</h1>
+            <a href="#" onclick="logoutAdmin()" style="color: #f87171; text-decoration: none; font-weight: bold;">قفل اللوحة 🔒</a>
+        </header>
+
+        <div style="background: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #334155;">
+            <h3 style="margin-top: 0; color: #ffffff;">مرحباً بك يا مدير المنصة!</h3>
+            <p style="color: #94a3b8; line-height: 1.6;">التصميم الجديد يعمل الآن بكفاءة عالية وتم تجاوز مشكلة الذاكرة المؤقتة. يمكنك من هنا متابعة مبيعات محفظة مالتشات وتأكيد الطلبات.</p>
+        </div>
+    </div>
+
+    <!-- سكريبت التحقق الفوري -->
+    <script>
+        const ADMIN_SECRET_KEY = "admin";
+
+        function checkAdminPassword() {
+            const enteredPass = document.getElementById('adminPasswordInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (enteredPass === ADMIN_SECRET_KEY) {
+                // إخفاء شاشة الدخول وإظهار اللوحة بالتصميم الجديد الداكن
+                document.getElementById('adminLockScreen').style.display = 'none';
+                document.getElementById('adminPanelContent').style.display = 'block';
+            } else {
+                errorMsg.innerText = "❌ كلمة المرور غير صحيحة! اكتب: admin";
+            }
+        }
+
+        function logoutAdmin() {
+            location.reload();
+        }
+    </script>
+
+</body>
+</html>
