@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -25,7 +25,7 @@
             <h3 style="margin-bottom: 15px; color: #f8fafc;">🔒 لوحة الإدارة المشفرة</h3>
             <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">أدخل كلمة مرور المشرف للدخول</p>
             
-            <input type="password" id="adminPasswordInput" placeholder="أدخل كلمة المرور" style="width:100%; padding:10px; margin-bottom:15px; background:#0f172a; color:white; border:1px solid #475569; border-radius:5px; text-align: center;">
+            <input type="password" id="adminPasswordInput" placeholder="أدخل كلمة المرور (admin)" style="width:100%; padding:10px; margin-bottom:15px; background:#0f172a; color:white; border:1px solid #475569; border-radius:5px; text-align: center;">
             
             <button class="btn-primary full-width" onclick="checkAdminPassword()">دخول لوحة التحكم</button>
             <p id="errorMsg" style="color: #ef4444; font-size: 12px; margin-top: 10px;"></p>
@@ -54,24 +54,23 @@
 
     <!-- سكريبت التحقق من كلمة المرور -->
     <script>
-        // كلمة المرور الافتتاحية للتجربة (يمكنك تغييرها هنا لأي كلمة تحبها)
-        const ADMIN_SECRET_KEY = "12345";
+        // كلمة السر الجديدة المباشرة للتجربة السريعة
+        const ADMIN_SECRET_KEY = "admin";
 
         function checkAdminPassword() {
             const enteredPass = document.getElementById('adminPasswordInput').value;
             const errorMsg = document.getElementById('errorMsg');
 
             if (enteredPass === ADMIN_SECRET_KEY) {
-                // إذا كانت كلمة المرور صحيحة، اخفِ شاشة القفل واعرض اللوحة
                 document.getElementById('adminLockScreen').style.display = 'none';
                 document.getElementById('adminPanelContent').style.display = 'block';
             } else {
-                errorMsg.innerText = "كلمة المرور غير صحيحة!";
+                errorMsg.innerText = "كلمة المرور غير صحيحة! (جرب كتابة admin)";
             }
         }
 
         function logoutAdmin() {
-            location.reload(); // إعادة تحميل الصفحة لإقفال اللوحة من جديد
+            location.reload();
         }
     </script>
 
