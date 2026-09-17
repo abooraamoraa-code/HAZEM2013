@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -46,14 +46,13 @@
     <!-- العلامة المائية الرسمية في الزاوية -->
     <div class="dev-badge">📑 إدارة وتطوير أبو العز العمري</div>
 
-    <!-- شاشة الحماية المعقدة والمغلقة -->
+    <!-- شاشة الحماية المشفرة -->
     <div id="adminLockScreen">
         <div class="admin-card">
             <span class="secure-badge">منطقة إدارية مشفرة 🔒</span>
             <h2 style="margin-bottom: 10px; color: #ffffff;">تسجيل دخول المشرف</h2>
             <p style="font-size: 13px; color: #94a3b8; margin-bottom: 25px;">يرجى إدخال مفتاح الصلاحية السري</p>
             
-            <!-- تم إخفاء أي تلميح لكلمة المرور تماماً -->
             <input type="password" id="adminPasswordInput" placeholder="أدخل كلمة المرور السرية" style="width:100%; padding:12px; margin-bottom:15px; background:#0f172a; color:white; border:1px solid #334155; border-radius:8px; text-align: center; font-size: 16px; outline: none;">
             
             <button class="btn-primary full-width" onclick="checkAdminPassword()" style="padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; background: #2563eb;">دخول آمن 🛡️</button>
@@ -64,29 +63,36 @@
     <!-- محتوى لوحة الإدارة -->
     <div id="adminPanelContent">
         <header style="border-bottom: 1px solid #1e293b; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
-            <h1 style="color: #60a5fa; margin: 0; font-size: 24px;">✨ لوحة تحكم المشرف (محمية)</h1>
+            <h1 style="color: #60a5fa; margin: 0; font-size: 24px;">✨ لوحة تحكم المشرف (إدارة الطلبات)</h1>
             <a href="#" onclick="logoutAdmin()" style="color: #f87171; text-decoration: none; font-weight: bold;">قفل اللوحة 🔒</a>
         </header>
 
         <div style="background: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #334155;">
-            <h3 style="margin-top: 0; color: #ffffff;">أهلاً بك يا مدير المنصة</h3>
-            <p style="color: #94a3b8; line-height: 1.6;">تم تشفير الواجهة وإخفاء مفاتيح الدخول بالكامل. النظام جاهز الآن لمتابعة الطلبات وتأكيد رخص العملاء.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #ffffff;">📦 طلبات الشراء الواردة من مالتشات</h3>
+                <button onclick="loadOrders()" style="background: #3b82f6; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;">تحديث الطلبات 🔄</button>
+            </div>
+            <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">الطلبات المسجلة من العملاء في سحابة Firebase:</p>
+            
+            <div id="ordersList" style="background: #0f172a; padding: 15px; border-radius: 8px; min-height: 120px; color: #cbd5e1; overflow-x: auto;">
+                اضغط على زر "تحديث الطلبات" لجلب البيانات الحية...
+            </div>
         </div>
     </div>
 
-    <!-- سكريبت الحماية المشفر -->
+    <!-- سكريبت الحماية وجلب الطلبات -->
     <script>
-        // كلمة المرور مشفرة بطريقة بسيطة داخل الكود لكي لا تظهر بوضوح للمتطفلين (كلمة المرور هنا هي: joml2026_secure)
-        const ENCRYPTED_KEY = "am9tbDIwMjZfc2VjdXJl"; // Base64 encoding for "joml2026_secure"
+        // كلمة المرور المشفرة (كلمة المرور الفعلية هي: joml2026_secure)
+        const ENCRYPTED_KEY = "am9tbDIwMjZfc2VjdXJl"; 
 
         function checkAdminPassword() {
             const enteredPass = document.getElementById('adminPasswordInput').value.trim();
             const errorMsg = document.getElementById('errorMsg');
 
-            // تحويل مدخلات المستخدم إلى تشفير ومقارنتها
             if (btoa(enteredPass) === ENCRYPTED_KEY) {
                 document.getElementById('adminLockScreen').style.display = 'none';
                 document.getElementById('adminPanelContent').style.display = 'block';
+                loadOrders(); // جلب الطلبات فور الدخول
             } else {
                 errorMsg.innerText = "❌ مفتاح الدخول غير صالح!";
                 document.getElementById('adminPasswordInput').value = "";
@@ -95,6 +101,43 @@
 
         function logoutAdmin() {
             location.reload();
+        }
+    </script>
+
+    <!-- سكريبت جلب وعرض طلبات Firebase سحابياً -->
+    <script type="module">
+        import { db } from './firebase-config.js';
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+        window.loadOrders = async function() {
+            const listDiv = document.getElementById('ordersList');
+            listDiv.innerHTML = "جاري جلب الطلبات من السحابة...";
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, "orders"));
+                if (querySnapshot.empty) {
+                    listDiv.innerHTML = "لا توجد طلبات شراء حتى الآن.";
+                    return;
+                }
+
+                let htmlContent = "<table style='width:100%; text-align:right; border-collapse: collapse;'>";
+                htmlContent += "<tr style='border-bottom: 2px solid #334155; padding-bottom: 10px;'><th style='padding: 8px;'>البريد الإلكتروني للعميل</th><th style='padding: 8px;'>نوع الترخيص</th><th style='padding: 8px;'>السعر</th><th style='padding: 8px;'>حالة الطلب</th></tr>";
+                
+                querySnapshot.forEach((doc) => {
+                    const order = doc.data();
+                    htmlContent += `<tr style='border-bottom: 1px solid #1e293b;'>
+                        <td style='padding: 10px; color: #60a5fa;'>${order.userEmail}</td>
+                        <td style='padding: 10px;'>${order.licenseType}</td>
+                        <td style='padding: 10px;'>$${order.price}</td>
+                        <td style='padding: 10px; color: #f59e0b; font-weight: bold;'>${order.status}</td>
+                    </tr>`;
+                });
+                
+                htmlContent += "</table>";
+                listDiv.innerHTML = htmlContent;
+            } catch (error) {
+                listDiv.innerHTML = "خطأ في الاتصال بقاعدة البيانات: " + error.message;
+            }
         }
     </script>
 
