@@ -1,44 +1,121 @@
-<script type="module">
-    import { db, auth } from './firebase-config.js';
-    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة القوالب - شراء القالب عبر مالتشات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    let currentPrice = 15;
-    let currentLicense = 'personal';
+    <!-- العلامة المائية الرسمية في الزاوية -->
+    <div class="dev-badge">📑 إدارة وتطوير أبو العز العمري</div>
 
-    window.updatePrice = function(price, type) {
-        currentPrice = price;
-        currentLicense = type;
-        document.getElementById('priceDisplay').innerText = "السعر: $" + price;
-    }
+    <!-- شريط التنقل العلوي -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <h1 class="logo">منصة القوالب</h1>
+            <nav class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="browse.html">استعراض القوالب</a>
+                <a href="auth.html">حسابي / تسجيل الدخول</a>
+            </nav>
+        </div>
+    </header>
 
-    window.payViaMalchat = async function() {
-        const user = auth.currentUser;
-        
-        // التحقق من أن المستخدم مسجل دخول
-        if (!user) {
-            alert("يرجى تسجيل الدخول أولاً لتتمكن من إتمام عملية الشراء!");
-            window.location.href = 'auth.html';
-            return;
+    <!-- محتوى صفحة المنتج والشراء -->
+    <div class="container" style="padding: 40px 0;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+            
+            <!-- تفاصيل القالب -->
+            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h2>قالب الشركات والخدمات الاحترافي</h2>
+                <p style="color: #64748b; margin: 10px 0;">التقنيات: HTML, CSS, Vanilla JS (جاهز للتعديل المباشر عبر المفكرة)</p>
+                <div style="background: #e2e8f0; height: 250px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; margin: 20px 0; font-weight: bold;">
+                    معاينة القالب البرمجي
+                </div>
+                <p style="line-height: 1.8;">
+                    هذا القالب مصمم بعناية فائقة، خفيف الوزن، وسهل التعديل بالكامل من خلال المفكرة دون أي تعقيد. يمنحك مظهراً احترافياً لعملك أو شركتك.
+                </p>
+            </div>
+
+            <!-- صندوق الشراء واختيار التراخيص والدفع عبر مالتشات -->
+            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: fit-content;">
+                <h3 style="margin-bottom: 15px;">اختر نوع الترخيص:</h3>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px;">
+                        <input type="radio" name="licenseType" value="personal" checked onchange="updatePrice(15, 'personal')"> 
+                        ترخيص شخصي ($15)
+                    </label>
+                    <label style="display: block; font-weight: bold; font-size: 14px;">
+                        <input type="radio" name="licenseType" value="commercial" onchange="updatePrice(39, 'commercial')"> 
+                        ترخيص تجاري ($39)
+                    </label>
+                </div>
+
+                <div style="font-size: 24px; font-weight: bold; color: #2563eb; margin: 20px 0;" id="priceDisplay">
+                    السعر: $15
+                </div>
+
+                <!-- زر الدفع وربط الطلب بسحابة Firebase -->
+                <button class="btn-primary full-width" onclick="payViaMalchat()">
+                    الدفع عبر محفظة مالتشات 💳
+                </button>
+                
+                <p style="font-size: 12px; color: #94a3b8; text-align: center; margin-top: 15px;">
+                    سيتم تسجيل طلبك وتحويلك لرابط محفظة مالتشات لإتمام الدفع الفوري.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- سكريبت الربط بقاعدة البيانات وتحويل الدفع -->
+    <script type="module">
+        import { db, auth } from './firebase-config.js';
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+        let currentPrice = 15;
+        let currentLicense = 'personal';
+
+        window.updatePrice = function(price, type) {
+            currentPrice = price;
+            currentLicense = type;
+            document.getElementById('priceDisplay').innerText = "السعر: $" + price;
         }
 
-        try {
-            // حفظ طلب الشراء في قاعدة بيانات فايربيس (Firestore) كطلب "قيد الانتظار"
-            await addDoc(collection(db, "orders"), {
-                userEmail: user.email,
-                licenseType: currentLicense,
-                price: currentPrice,
-                status: "pending", // قيد المراجعة حتى يتم التحقق من الدفع
-                timestamp: new Date()
-            });
+        window.payViaMalchat = async function() {
+            const user = auth.currentUser;
+            
+            // التحقق من تسجيل الدخول
+            if (!user) {
+                alert("يرجى تسجيل الدخول أولاً من صفحة حسابي لتتمكن من إتمام عملية الشراء!");
+                window.location.href = 'auth.html';
+                return;
+            }
 
-            // رابط محفظة مالتشات الحقيقي الخاص بك
-            const malchatLink = "https://malchat.app/wallet/YOUR_WALLET_ID"; // استبدل برابط محفظتك الفعلي
+            try {
+                // حفظ طلب الشراء في سحابة Firebase بشكل تلقائي
+                await addDoc(collection(db, "orders"), {
+                    userEmail: user.email,
+                    licenseType: currentLicense,
+                    price: currentPrice,
+                    status: "قيد المراجعة (انتظار الدفع)",
+                    timestamp: new Date()
+                });
 
-            alert("تم تسجيل طلبك بنجاح! سيتم تحويلك الآن إلى محفظة مالتشات لإتمام الدفع بقيمة ($" + currentPrice + ").");
-            window.open(malchatLink, '_blank');
+                // رابط محفظة مالتشات الخاص بك (استبدل YOUR_WALLET_ID برابطك الفعلي)
+                const malchatLink = "https://malchat.app/wallet/YOUR_WALLET_ID";
 
-        } catch (error) {
-            alert("حدث خطأ أثناء تسجيل الطلب: " + error.message);
+                alert("تم تسجيل طلبك بنجاح في النظام! سيتم تحويلك الآن إلى محفظة مالتشات لدفع مبلغ ($" + currentPrice + ").");
+                window.open(malchatLink, '_blank');
+
+            } catch (error) {
+                alert("حدث خطأ أثناء تسجيل الطلب: " + error.message);
+            }
         }
-    }
-</script>
+    </script>
+
+</body>
+</html>
